@@ -1,100 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- タイトル -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AImer"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp" />
+
+    <!-- 区切り線 -->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="2dp"
+        android:background="#AAAAAA"
+        android:layout_marginBottom="20dp" />
 
-        <!-- タイトル -->
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AImer"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:paddingBottom="10dp" />
+    <!-- 大きいボタン -->
+    <Button
+        android:id="@+id/bigButton"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:text="お話し"
+        android:textSize="60sp" />
 
-        <!-- 区切り線 -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#AAAAAA"
-            android:layout_marginBottom="20dp" />
+    <!-- 横並びボタン -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
-        <!-- 大きいボタン -->
+        <!-- 左ボタン -->
         <Button
-            android:id="@+id/bigButton"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:text="お話し"
-            android:textSize="60sp" />
+            android:id="@+id/leftButton"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:text="脳トレ" />
 
-        <!-- 横並びボタン -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
-
-            <!-- 左ボタン -->
-            <Button
-                android:id="@+id/leftButton"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_weight="1"
-                android:text="脳トレ" />
-            android:te
-
-            <!-- 間隔 -->
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="wrap_content" />
-
-            <!-- 右ボタン -->
-            <Button
-                android:id="@+id/rightButton"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_weight="1"
-                android:text="右" />
-        </LinearLayout>
-
-        <!-- 空白で下に押し出す -->
+        <!-- 間隔 -->
         <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
 
-        <!-- 一番下のボタン -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- 設定ボタン -->
-            <Button
-                android:id="@+id/settingsButton"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:text="ヘルプ" />
-
-            <!-- 間隔 -->
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="wrap_content" />
-
-            <!-- ヘルプボタン -->
-            <Button
-                android:id="@+id/helpButton"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:text="設定" />
-        </LinearLayout>
-
+        <!-- 右ボタン -->
+        <Button
+            android:id="@+id/rightButton"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:text="右" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 空白で下に押し出す -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- 一番下のボタン -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- 設定ボタン -->
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="ヘルプ" />
+
+        <!-- 間隔 -->
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <!-- ヘルプボタン -->
+        <Button
+            android:id="@+id/helpButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="設定" />
+    </LinearLayout>
+
+</LinearLayout> <!-- ← これを忘れないでください！ -->
