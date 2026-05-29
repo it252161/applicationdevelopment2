@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".DiaryActivity2">
+
+    <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:padding="16dp"
+       android:gravity="center_horizontal">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="AImer"
+           android:textSize="42sp"
+           android:textStyle="bold"
+           android:layout_marginVertical="16dp" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:gravity="center"
+           android:layout_marginBottom="16dp">
+
+           <Button
+               android:id="@+id/btn_prev_date"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:text="◀"
+               android:textSize="18sp" />
+
+           <TextView
+               android:id="@+id/tv_selected_date"
+               android:layout_width="200dp"
+               android:layout_height="wrap_content"
+               android:text="2026 - 05 - 23"
+               android:textSize="24sp"
+               android:textStyle="bold"
+               android:gravity="center" />
+
+           <Button
+               android:id="@+id/btn_next_date"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:text="▶"
+               android:textSize="18sp" />
+       </LinearLayout>
+
+       <EditText
+           android:id="@+id/et_diary_content"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:hint="ここに日記を入力してみよう。"
+           android:textSize="18sp"
+           android:gravity="top"
+           android:padding="12dp"
+           android:background="@android:drawable/editbox_background"
+           android:inputType="textMultiLine" />
+
+       <ImageButton
+           android:id="@+id/btn_mic"
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:layout_marginVertical="16dp"
+           android:src="@android:drawable/ic_btn_speak_now"
+           android:background="?android:attr/selectableItemBackground" />
+
+       <Button
+           android:id="@+id/btn_save"
+           android:layout_width="match_parent"
+           android:layout_height="60dp"
+           android:text="日記を保存する"
+           android:textSize="20sp"
+           android:textStyle="bold" />
+</LinearLayout>
