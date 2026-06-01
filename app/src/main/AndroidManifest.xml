@@ -13,17 +13,29 @@
         android:theme="@style/Theme.AImerMain"
         tools:targetApi="31">
         <activity
-            android:name=".DiaryActivity2"
+            android:name=".activity_result"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity_genre_select"
+            android:exported="false" /> <!-- ジャンル選択画面：ここを LAUNCHER に設定 -->
+        <activity
+            android:name=".GenreSelectActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- ゲーム本編：LAUNCHER 属性を削除 -->
+        <activity
+            android:name=".braintraining"
+            android:exported="false" /> <!-- 結果画面：追加 -->
+        <activity
+            android:name=".ResultActivity"
+            android:exported="false" /> <!-- メイン画面（必要であれば残す、不要なら削除） -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

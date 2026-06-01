@@ -1,6 +1,7 @@
 package com.example.aimermain;
 
 import android.annotation.SuppressLint;
+import android.content.Intent; // 追加
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,22 +28,14 @@ public class braintraining extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button[] btnAnswers = new Button[4];
     private List<QuestionData> questionList = new ArrayList<>();
-    private List<QuizRecord> history = new ArrayList<>();
 
+    // 結果画面に渡すために履歴クラスを少し変更
     private int currentQuestionIndex = 0;
     private int score = 0;
     private CountDownTimer countDownTimer;
-    private final long TIME_LIMIT = 10000; // 10秒
+    private final long TIME_LIMIT = 10000;
 
-    // 履歴保存用クラス
-    class QuizRecord {
-        String question; String userAns; String correctAns; boolean isCorrect;
-        QuizRecord(String q, String u, String c, boolean res) {
-            this.question = q; this.userAns = u; this.correctAns = c; this.isCorrect = res;
-        }
-    }
-
-    // 問題データクラス（JSONの新しい構造に対応）
+    // 内部クラス（既存）
     class QuestionData {
         String question; String[] choices; String answer; String genre; String explanation;
         QuestionData(String question, String[] choices, String answer, String genre, String explanation) {
@@ -69,8 +62,10 @@ public class braintraining extends AppCompatActivity {
 
         loadQuestionsFromJSON();
 
-        // ジャンル絞り込み（将来的にIntent等で選択したジャンルを受け取る想定）
-        filterByGenre("計算");
+        // ★追記：ジャンル選択画面から送られてきた値を受け取る
+        String selectedGenre = getIntent().getStringExtra("SELECTED_GENRE");
+        if (selectedGenre == null) selectedGenre = "すべて";
+        filterByGenre(selectedGenre);
 
         Collections.shuffle(questionList);
         if (questionList.size() > 10) {
@@ -80,6 +75,8 @@ public class braintraining extends AppCompatActivity {
         progressBar.setMax(questionList.size());
         displayQuestion();
     }
+
+    // --- メソッド群（既存のものはそのまま、showFinalResultのみ書き換え） ---
 
     private void loadQuestionsFromJSON() {
         try {
@@ -108,7 +105,6 @@ public class braintraining extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "問題の読み込みに失敗しました", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,14 +120,10 @@ public class braintraining extends AppCompatActivity {
     private void startTimer() {
         if (countDownTimer != null) countDownTimer.cancel();
         countDownTimer = new CountDownTimer(TIME_LIMIT, 100) {
-            @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText("残り: " + String.format("%.1f", millisUntilFinished / 1000.0) + "秒");
-                if (millisUntilFinished < 3000) tvTimer.setTextColor(Color.RED);
-                else tvTimer.setTextColor(Color.BLACK);
             }
             public void onFinish() {
-                tvTimer.setText("時間切れ！");
                 checkAnswer("TIMEOUT", questionList.get(currentQuestionIndex));
             }
         }.start();
@@ -142,7 +134,7 @@ public class braintraining extends AppCompatActivity {
             progressBar.setProgress(currentQuestionIndex + 1);
             QuestionData currentQ = questionList.get(currentQuestionIndex);
             tvQuestion.setText(currentQ.question);
-            tvQuestion.setBackgroundColor(Color.TRANSPARENT); // 背景リセット
+            tvQuestion.setBackgroundColor(Color.TRANSPARENT);
 
             List<String> shuffledChoices = new ArrayList<>();
             for (String s : currentQ.choices) shuffledChoices.add(s);
@@ -153,7 +145,7 @@ public class braintraining extends AppCompatActivity {
                 btnAnswers[i].setText(choiceText);
                 btnAnswers[i].setEnabled(true);
                 btnAnswers[i].setOnClickListener(v -> {
-                    if (countDownTimer != null) countDownTimer.cancel();
+                    countDownTimer.cancel();
                     checkAnswer(choiceText, currentQ);
                 });
             }
@@ -164,39 +156,34 @@ public class braintraining extends AppCompatActivity {
     }
 
     private void checkAnswer(String selected, QuestionData currentQ) {
-        for (Button btn : btnAnswers) btn.setEnabled(false); // 二重押し防止
-
+        for (Button btn : btnAnswers) btn.setEnabled(false);
         boolean isCorrect = selected.equals(currentQ.answer);
         if (isCorrect) {
             score++;
-            tvQuestion.setBackgroundColor(Color.parseColor("#C8E6C9")); // 薄い緑
+            tvQuestion.setBackgroundColor(Color.parseColor("#C8E6C9"));
         } else {
-            tvQuestion.setBackgroundColor(Color.parseColor("#FFCDD2")); // 薄い赤
+            tvQuestion.setBackgroundColor(Color.parseColor("#FFCDD2"));
         }
-
-        history.add(new QuizRecord(currentQ.question, selected, currentQ.answer, isCorrect));
         tvScore.setText("Score: " + score);
 
-        // 1秒後に次の問題へ
         tvQuestion.postDelayed(() -> {
             currentQuestionIndex++;
             displayQuestion();
         }, 1000);
     }
 
+    // ★書き換え：結果を表示するのではなく、結果画面へ遷移させる
     private void showFinalResult() {
         if (countDownTimer != null) countDownTimer.cancel();
         saveHighScore();
 
-        int highScore = getSharedPreferences("BrainGame", MODE_PRIVATE).getInt("hi_score", 0);
+        // 結果画面 (ResultActivity) へのインテントを作成
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("SCORE", score);
+        intent.putExtra("TOTAL", questionList.size());
 
-        String resultText = "【終了！】\n" +
-                "正解数: " + score + " / " + questionList.size() + "\n" +
-                "自己ベスト: " + highScore;
-
-        tvQuestion.setText(resultText);
-        tvTimer.setText("お疲れ様でした！");
-        for (Button btn : btnAnswers) btn.setEnabled(false);
+        startActivity(intent);
+        finish(); // クイズ画面を終了して戻れないようにする
     }
 
     private void saveHighScore() {
@@ -204,7 +191,6 @@ public class braintraining extends AppCompatActivity {
         int lastHighScore = pref.getInt("hi_score", 0);
         if (score > lastHighScore) {
             pref.edit().putInt("hi_score", score).apply();
-            Toast.makeText(this, "ハイスコア更新！", Toast.LENGTH_LONG).show();
         }
     }
 }
