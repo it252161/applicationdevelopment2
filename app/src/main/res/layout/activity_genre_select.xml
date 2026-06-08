@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="#F8F9FA">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ジャンルを選んでください"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="40dp"/>
+
+    <Button android:id="@+id/btnMath" android:layout_width="match_parent" android:layout_height="80dp" android:text="計算モード" android:layout_marginBottom="10dp" android:backgroundTint="#4CAF50"/>
+    <Button android:id="@+id/btnKanji" android:layout_width="match_parent" android:layout_height="80dp" android:text="漢字モード" android:layout_marginBottom="10dp" android:backgroundTint="#2196F3"/>
+    <Button android:id="@+id/btnLogic" android:layout_width="match_parent" android:layout_height="80dp" android:text="論理モード" android:layout_marginBottom="10dp" android:backgroundTint="#FF9800"/>
+    <Button android:id="@+id/btnAll" android:layout_width="match_parent" android:layout_height="80dp" android:text="すべてのジャンル" android:backgroundTint="#757575"/>
+
+</LinearLayout>

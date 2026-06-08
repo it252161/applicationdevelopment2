@@ -37,10 +37,18 @@ public class braintraining extends AppCompatActivity {
 
     // 内部クラス（既存）
     class QuestionData {
-        String question; String[] choices; String answer; String genre; String explanation;
+        String question;
+        String[] choices;
+        String answer;
+        String genre;
+        String explanation;
+
         QuestionData(String question, String[] choices, String answer, String genre, String explanation) {
-            this.question = question; this.choices = choices; this.answer = answer;
-            this.genre = genre; this.explanation = explanation;
+            this.question = question;
+            this.choices = choices;
+            this.answer = answer;
+            this.genre = genre;
+            this.explanation = explanation;
         }
     }
 
@@ -123,6 +131,7 @@ public class braintraining extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText("残り: " + String.format("%.1f", millisUntilFinished / 1000.0) + "秒");
             }
+
             public void onFinish() {
                 checkAnswer("TIMEOUT", questionList.get(currentQuestionIndex));
             }
